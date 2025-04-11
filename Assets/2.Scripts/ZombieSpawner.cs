@@ -6,16 +6,19 @@ public class ZombieSpawner : MonoBehaviour
 {
     public string key = "Zombie";
     public GameObject Zombie;
-    
+
     // Start is called before the first frame update
     void Start()
-    {    
-        GameObject instance = PoolManager.Instance.GetObject(key, Zombie, this.transform);
+    {
+        StartCoroutine(SpawnZombie());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator SpawnZombie()
     {
-        
+        while (true)
+        {
+            GameObject instance = PoolManager.Instance.GetObject(key, Zombie, this.transform);
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

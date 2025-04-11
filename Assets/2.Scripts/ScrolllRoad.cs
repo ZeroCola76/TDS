@@ -1,18 +1,57 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ScrolllRoad : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject backgroundParent; 
+    public float moveSpeed = 5f;
+
+    private float backgroundWidth;
+    private GameObject backgroundClone;
+
     void Start()
     {
-        
+        if (backgroundParent == null)
+        {
+            enabled = false;
+            return;
+        }
+
+        SpriteRenderer firstRenderer = backgroundParent.GetComponentInChildren<SpriteRenderer>();
+        if (firstRenderer == null)
+        {
+            enabled = false;
+            return;
+        }
+        backgroundWidth = firstRenderer.bounds.size.x;
+
+        backgroundClone = Instantiate(backgroundParent, backgroundParent.transform.parent);
+        backgroundClone.transform.position = backgroundParent.transform.position + Vector3.right * backgroundWidth;
+
+        MoveBackground();
     }
 
-    // Update is called once per frame
-    void Update()
+    void MoveBackground()
     {
-        
+        float moveAmount = backgroundWidth * 2f;
+
+        backgroundParent.transform.DOMoveX(backgroundParent.transform.position.x - moveAmount, moveAmount / moveSpeed)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Restart)
+            .OnStepComplete(() =>
+            {
+                backgroundParent.transform.position += Vector3.right * moveAmount;
+            });
+
+        backgroundClone.transform.DOMoveX(backgroundClone.transform.position.x - moveAmount, moveAmount / moveSpeed)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Restart)
+            .OnStepComplete(() =>
+            {
+                backgroundClone.transform.position += Vector3.right * moveAmount;
+            });
     }
 }
