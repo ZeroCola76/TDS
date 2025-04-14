@@ -46,7 +46,14 @@ public class PoolManager : MonoBehaviour
             CreatePool(key, prefab, 50, parentTransform);
         }
 
-        return pools[key].Get();
+        GameObject obj = pools[key].Get();
+
+        if (parentTransform != null)
+        {
+            obj.transform.SetParent(parentTransform); 
+        }
+
+        return obj;
     }
 
     public void ReturnObject(string key, GameObject obj)
@@ -59,7 +66,6 @@ public class PoolManager : MonoBehaviour
 
     public void InitializePools()
     {
-        // 기존 풀을 모두 제거합니다.
         foreach (var pool in pools.Values)
         {
             pool.Clear();

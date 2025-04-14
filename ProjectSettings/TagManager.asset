@@ -3,21 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Hero
+  - Bullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Zombie
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Floor1
+  - Floor2
+  - Floor3
+  - Zombie2
+  - Zombie3
+  - Bullet
+  - Box
   - 
   - 
   - 
